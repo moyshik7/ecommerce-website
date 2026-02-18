@@ -70,10 +70,6 @@ export default async function HomePage() {
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-32 lg:py-40">
           <div className="max-w-xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 bg-indigo-500/20 border border-indigo-500/30 rounded-full text-indigo-300 text-sm font-medium mb-6">
-              <Sparkles className="w-3.5 h-3.5" />
-              New Season Collection
-            </div>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight tracking-tight">
               Discover Products
               <span className="block text-indigo-400 mt-1">You&apos;ll Love</span>
