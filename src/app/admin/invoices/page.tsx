@@ -4,7 +4,8 @@ import { connectDB } from '@/lib/mongodb';
 import Order from '@/models/Order';
 import AdminNav from '@/components/AdminNav';
 import { formatPrice, formatDate } from '@/lib/utils';
-import { FileText, Download, Search } from 'lucide-react';
+import { FileText, Search } from 'lucide-react';
+import PrintButton from '@/components/PrintButton';
 
 async function getInvoices(search?: string) {
   try {
@@ -131,13 +132,7 @@ export default async function AdminInvoicesPage({
                         </span>
                       </td>
                       <td className="py-4 px-6">
-                        <button
-                          onClick={() => window.print()}
-                          className="inline-flex items-center gap-1 px-3 py-1.5 bg-purple-100 text-purple-600 rounded-lg text-sm font-medium hover:bg-purple-200 transition-colors"
-                        >
-                          <Download className="w-4 h-4" />
-                          Download
-                        </button>
+                        <PrintButton />
                       </td>
                     </tr>
                   ))
