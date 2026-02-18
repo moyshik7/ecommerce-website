@@ -1,36 +1,146 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ShopHub - Next.js E-commerce Application
+
+A modern, beautiful e-commerce application built with Next.js 16, featuring user authentication, admin dashboard, product management, cart functionality, and order tracking.
+
+## Features
+
+### User Features
+- 🔐 User authentication (login/register) with NextAuth
+- 🛍️ Browse products by category
+- 🔍 Search products
+- 🛒 Shopping cart with persistent storage
+- 💳 Checkout with multiple payment options
+- 📦 Order tracking with status updates (pending, approved, shipped, delivered)
+- 👤 User profile with order history
+
+### Admin Features
+- 📊 Dashboard with statistics (revenue, orders, users, products)
+- 📦 Order management (view, update status)
+- 👥 User management
+- 🏷️ Product management
+- 📄 Invoice viewing and management
+
+### Design
+- 🎨 Modern, beautiful UI with gradient colors
+- ✨ Smooth animations with Framer Motion
+- 📱 Fully responsive design
+- 🌙 Clean and intuitive interface
+
+## Tech Stack
+
+- **Framework:** Next.js 16 (App Router)
+- **Language:** TypeScript
+- **Styling:** Tailwind CSS
+- **Database:** MongoDB with Mongoose
+- **Authentication:** NextAuth.js
+- **State Management:** Zustand (cart)
+- **Forms:** React Hook Form + Zod
+- **Animations:** Framer Motion
+- **Icons:** Lucide React
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- Node.js 18+ 
+- MongoDB (local or Atlas)
+
+### Installation
+
+1. **Clone and install dependencies:**
+   ```bash
+   npm install
+   ```
+
+2. **Set up environment variables:**
+   Create a `.env.local` file:
+   ```env
+   # MongoDB
+   MONGODB_URI=mongodb://localhost:27017/ecommerce-nextjs
+
+   # NextAuth Secret (generate with: openssl rand -base64 32)
+   NEXTAUTH_SECRET=your-super-secret-key-change-this-in-production-min-32-chars
+
+   # NextAuth URL
+   NEXTAUTH_URL=http://localhost:3000
+   ```
+
+3. **Seed the database:**
+   ```bash
+   npm run seed
+   ```
+   This creates sample products and an admin user.
+
+4. **Start the development server:**
+   ```bash
+   npm run dev
+   ```
+
+5. **Open your browser:**
+   Navigate to [http://localhost:3000](http://localhost:3000)
+
+## Default Admin Credentials
+
+After running the seed script:
+- **Email:** admin@shophub.com
+- **Password:** admin123
+
+## Project Structure
+
+```
+src/
+├── app/
+│   ├── api/              # API routes
+│   ├── admin/            # Admin dashboard pages
+│   ├── products/         # Product pages
+│   ├── login/            # Auth pages
+│   ├── cart/             # Cart page
+│   ├── checkout/         # Checkout page
+│   └── profile/          # User profile
+├── components/           # Reusable components
+├── lib/                  # Utilities and config
+├── models/               # Mongoose models
+├── store/                # Zustand stores
+└── types/                # TypeScript types
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Available Scripts
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run start` - Start production server
+- `npm run seed` - Seed database with sample data
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Pages
 
-## Learn More
+### Public Pages
+- `/` - Home page with featured products
+- `/products` - All products with filtering
+- `/products/[id]` - Product detail page
+- `/cart` - Shopping cart
+- `/login` - Login page
+- `/register` - Registration page
 
-To learn more about Next.js, take a look at the following resources:
+### Protected Pages
+- `/profile` - User profile with order history
+- `/checkout` - Checkout page
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Admin Pages
+- `/admin` - Admin dashboard
+- `/admin/orders` - Order management
+- `/admin/orders/[id]` - Order detail & status update
+- `/admin/products` - Product management
+- `/admin/users` - User management
+- `/admin/invoices` - Invoice management
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Order Status Flow
 
-## Deploy on Vercel
+```
+Pending → Approved → Processing → Shipped → Delivered
+                                    ↓
+                              Cancelled
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## License
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+MIT
