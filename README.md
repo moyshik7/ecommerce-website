@@ -2,6 +2,35 @@
 
 A modern, beautiful e-commerce application built with Next.js 16, featuring user authentication, admin dashboard, product management, cart functionality, and order tracking.
 
+## Screenshots
+
+### Home
+![Home 1](https://raw.githubusercontent.com/moyshik7/ecommerce-website/refs/heads/main/screenshots/home-1.png)
+![Home 2](https://raw.githubusercontent.com/moyshik7/ecommerce-website/refs/heads/main/screenshots/home-2.png)
+![Home 3](https://raw.githubusercontent.com/moyshik7/ecommerce-website/refs/heads/main/screenshots/home-3.png)
+![Home 4](https://raw.githubusercontent.com/moyshik7/ecommerce-website/refs/heads/main/screenshots/home-4.png)
+
+### Products
+![Products Category View](https://raw.githubusercontent.com/moyshik7/ecommerce-website/refs/heads/main/screenshots/product/products-category-view.png)
+![Product View 1](https://raw.githubusercontent.com/moyshik7/ecommerce-website/refs/heads/main/screenshots/product/product-view-individual-1.png)
+![Product View 2](https://raw.githubusercontent.com/moyshik7/ecommerce-website/refs/heads/main/screenshots/product/product-view-individual-2.png)
+![Search](https://raw.githubusercontent.com/moyshik7/ecommerce-website/refs/heads/main/screenshots/product/search.png)
+
+### Cart & Checkout
+![Cart](https://raw.githubusercontent.com/moyshik7/ecommerce-website/refs/heads/main/screenshots/product/cart.png)
+![Checkout](https://raw.githubusercontent.com/moyshik7/ecommerce-website/refs/heads/main/screenshots/product/checkout-page.png)
+
+### User
+![Login](https://raw.githubusercontent.com/moyshik7/ecommerce-website/refs/heads/main/screenshots/user/login-page.png)
+![Sign Up](https://raw.githubusercontent.com/moyshik7/ecommerce-website/refs/heads/main/screenshots/user/signup.png)
+![User Profile](https://raw.githubusercontent.com/moyshik7/ecommerce-website/refs/heads/main/screenshots/user/user-profile.png)
+
+### Admin
+![Admin Dashboard](https://raw.githubusercontent.com/moyshik7/ecommerce-website/refs/heads/main/screenshots/admin/admin-dashboard.png)
+![Admin Orders](https://raw.githubusercontent.com/moyshik7/ecommerce-website/refs/heads/main/screenshots/admin/admin-orders.png)
+![Admin Products](https://raw.githubusercontent.com/moyshik7/ecommerce-website/refs/heads/main/screenshots/admin/admin-products.png)
+![Admin Invoices](https://raw.githubusercontent.com/moyshik7/ecommerce-website/refs/heads/main/screenshots/admin/admin-invoices.png)
+
 ## Features
 
 ### User Features
