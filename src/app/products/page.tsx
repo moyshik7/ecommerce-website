@@ -2,7 +2,7 @@ import Navbar from '@/components/Navbar';
 import ProductCard from '@/components/ProductCard';
 import { connectDB } from '@/lib/mongodb';
 import Product from '@/models/Product';
-import { Filter, SlidersHorizontal } from 'lucide-react';
+import { Filter, SlidersHorizontal, Search } from 'lucide-react';
 
 async function getProducts(category?: string, search?: string) {
   try {
@@ -29,7 +29,10 @@ async function getProducts(category?: string, search?: string) {
 async function getCategories() {
   try {
     await connectDB();
-    const categories = await Product.distinct('category');
+    const categories = await Product.aggregate([
+      { $group: { _id: '$category', count: { $sum: 1 } } },
+      { $sort: { count: -1 } },
+    ]);
     return categories;
   } catch {
     return [];
@@ -48,43 +51,60 @@ export default async function ProductsPage({
   ]);
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-white">
       <Navbar />
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Page Header */}
+        <div className="mb-8">
+          <h1 className="text-2xl md:text-3xl font-bold text-gray-900 tracking-tight">
+            {category ? (
+              <span className="capitalize">{category}</span>
+            ) : search ? (
+              <>Results for &ldquo;{search}&rdquo;</>
+            ) : (
+              'All Products'
+            )}
+          </h1>
+          <p className="text-gray-500 text-sm mt-1">
+            {products.length} {products.length === 1 ? 'product' : 'products'} found
+          </p>
+        </div>
+
         <div className="flex flex-col md:flex-row gap-8">
           {/* Sidebar Filters */}
-          <aside className="w-full md:w-64 flex-shrink-0">
-            <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 sticky top-24">
-              <div className="flex items-center gap-2 mb-6">
-                <SlidersHorizontal className="w-5 h-5 text-purple-600" />
-                <h2 className="font-semibold text-gray-900">Filters</h2>
+          <aside className="w-full md:w-56 flex-shrink-0">
+            <div className="bg-white rounded-xl border border-gray-200 p-5 sticky top-24">
+              <div className="flex items-center gap-2 mb-5 pb-3 border-b border-gray-100">
+                <SlidersHorizontal className="w-4 h-4 text-gray-500" />
+                <h2 className="font-semibold text-sm text-gray-900">Filters</h2>
               </div>
               
               <div>
-                <h3 className="text-sm font-medium text-gray-700 mb-3">Categories</h3>
-                <div className="space-y-2">
+                <h3 className="text-xs font-semibold uppercase tracking-wider text-gray-400 mb-3">Categories</h3>
+                <div className="space-y-0.5">
                   <a
                     href="/products"
-                    className={`block px-3 py-2 rounded-xl text-sm transition-colors ${
+                    className={`block px-3 py-2 rounded-lg text-sm transition-colors ${
                       !category
-                        ? 'bg-purple-100 text-purple-600 font-medium'
+                        ? 'bg-indigo-50 text-indigo-700 font-medium'
                         : 'text-gray-600 hover:bg-gray-50'
                     }`}
                   >
                     All Products
                   </a>
-                  {categories.map((cat: string) => (
+                  {categories.map((cat: any) => (
                     <a
-                      key={cat}
-                      href={`/products?category=${encodeURIComponent(cat)}`}
-                      className={`block px-3 py-2 rounded-xl text-sm capitalize transition-colors ${
-                        category === cat
-                          ? 'bg-purple-100 text-purple-600 font-medium'
+                      key={cat._id}
+                      href={`/products?category=${encodeURIComponent(cat._id)}`}
+                      className={`flex items-center justify-between px-3 py-2 rounded-lg text-sm capitalize transition-colors ${
+                        category === cat._id
+                          ? 'bg-indigo-50 text-indigo-700 font-medium'
                           : 'text-gray-600 hover:bg-gray-50'
                       }`}
                     >
-                      {cat}
+                      <span>{cat._id}</span>
+                      <span className="text-xs text-gray-400">{cat.count}</span>
                     </a>
                   ))}
                 </div>
@@ -94,39 +114,22 @@ export default async function ProductsPage({
           
           {/* Products Grid */}
           <main className="flex-1">
-            <div className="flex items-center justify-between mb-6">
-              <div>
-                <h1 className="text-2xl font-bold text-gray-900">
-                  {category ? (
-                    <span className="capitalize">{category}</span>
-                  ) : search ? (
-                    `Search: "${search}"`
-                  ) : (
-                    'All Products'
-                  )}
-                </h1>
-                <p className="text-gray-500 text-sm mt-1">
-                  {products.length} {products.length === 1 ? 'product' : 'products'} found
-                </p>
-              </div>
-            </div>
-            
             {products.length > 0 ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
                 {products.map((product: any) => (
                   <ProductCard key={product._id} product={product} />
                 ))}
               </div>
             ) : (
-              <div className="text-center py-16 bg-white rounded-2xl shadow-sm">
-                <Filter className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-                <h3 className="text-lg font-medium text-gray-900 mb-2">No products found</h3>
-                <p className="text-gray-500 mb-4">
+              <div className="text-center py-20 bg-gray-50 rounded-xl border border-gray-200">
+                <Search className="w-12 h-12 text-gray-300 mx-auto mb-4" />
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">No products found</h3>
+                <p className="text-gray-500 text-sm mb-4">
                   Try adjusting your filters or search term
                 </p>
                 <a
                   href="/products"
-                  className="text-purple-600 hover:text-purple-700 font-medium"
+                  className="text-indigo-600 hover:text-indigo-700 font-medium text-sm"
                 >
                   Clear all filters
                 </a>

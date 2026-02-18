@@ -62,115 +62,93 @@ export default async function AdminDashboard() {
 
   const statCards = [
     {
-      title: 'Total Revenue',
+      title: 'Revenue',
       value: formatPrice(stats.totalRevenue),
       icon: DollarSign,
-      color: 'from-green-500 to-emerald-600',
-      bgColor: 'bg-green-100',
+      iconColor: 'text-emerald-600',
+      bgColor: 'bg-emerald-50',
     },
     {
-      title: 'Total Orders',
+      title: 'Orders',
       value: stats.totalOrders.toString(),
       icon: ShoppingCart,
-      color: 'from-blue-500 to-cyan-600',
-      bgColor: 'bg-blue-100',
+      iconColor: 'text-blue-600',
+      bgColor: 'bg-blue-50',
     },
     {
-      title: 'Total Users',
+      title: 'Users',
       value: stats.totalUsers.toString(),
       icon: Users,
-      color: 'from-purple-500 to-pink-600',
-      bgColor: 'bg-purple-100',
+      iconColor: 'text-violet-600',
+      bgColor: 'bg-violet-50',
     },
     {
-      title: 'Total Products',
+      title: 'Products',
       value: stats.totalProducts.toString(),
       icon: Package,
-      color: 'from-orange-500 to-red-600',
-      bgColor: 'bg-orange-100',
+      iconColor: 'text-amber-600',
+      bgColor: 'bg-amber-50',
     },
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-purple-50/30">
+    <div className="min-h-screen bg-gray-50">
       <AdminNav />
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">Admin Dashboard</h1>
-          <p className="text-gray-500 mt-1">Overview of your store performance</p>
-        </div>
+        <h1 className="text-xl font-bold text-gray-900 mb-6">Dashboard</h1>
         
-        {/* Stats Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        {/* Stats */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
           {statCards.map((stat) => {
             const Icon = stat.icon;
             return (
-              <div
-                key={stat.title}
-                className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 hover:shadow-lg transition-shadow"
-              >
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm text-gray-500 mb-1">{stat.title}</p>
-                    <p className="text-2xl font-bold text-gray-900">{stat.value}</p>
-                  </div>
-                  <div className={`w-14 h-14 ${stat.bgColor} rounded-2xl flex items-center justify-center`}>
-                    <Icon className={`w-7 h-7 ${stat.color.replace('from-', 'text-').split(' ')[0]}`} />
+              <div key={stat.title} className="bg-white rounded-xl border border-gray-200 p-5">
+                <div className="flex items-center justify-between mb-3">
+                  <span className="text-xs font-medium text-gray-500 uppercase tracking-wider">{stat.title}</span>
+                  <div className={`w-8 h-8 ${stat.bgColor} rounded-lg flex items-center justify-center`}>
+                    <Icon className={`w-4 h-4 ${stat.iconColor}`} />
                   </div>
                 </div>
+                <p className="text-2xl font-bold text-gray-900">{stat.value}</p>
               </div>
             );
           })}
         </div>
         
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Pending Orders Alert */}
-          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 bg-yellow-100 rounded-xl flex items-center justify-center">
-                <TrendingUp className="w-5 h-5 text-yellow-600" />
-              </div>
-              <h2 className="text-xl font-bold text-gray-900">Pending Orders</h2>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {/* Pending Orders */}
+          <div className="bg-white rounded-xl border border-gray-200 p-5">
+            <div className="flex items-center gap-2 mb-3">
+              <TrendingUp className="w-4 h-4 text-amber-600" />
+              <h2 className="font-semibold text-gray-900 text-sm">Pending Orders</h2>
             </div>
-            <p className="text-4xl font-bold text-yellow-600 mb-2">{stats.pendingOrders}</p>
-            <p className="text-gray-500">Orders awaiting approval</p>
+            <p className="text-3xl font-bold text-amber-600 mb-1">{stats.pendingOrders}</p>
+            <p className="text-xs text-gray-500 mb-3">Awaiting approval</p>
             {stats.pendingOrders > 0 && (
               <a
                 href="/admin/orders"
-                className="mt-4 inline-block px-4 py-2 bg-yellow-100 text-yellow-700 font-medium rounded-xl hover:bg-yellow-200 transition-colors"
+                className="inline-block text-xs font-medium text-indigo-600 hover:text-indigo-700"
               >
-                View Pending Orders →
+                View Orders &rarr;
               </a>
             )}
           </div>
           
           {/* Quick Actions */}
-          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-            <h2 className="text-xl font-bold text-gray-900 mb-4">Quick Actions</h2>
-            <div className="grid grid-cols-2 gap-3">
-              <a
-                href="/admin/orders"
-                className="p-4 bg-gradient-to-r from-pink-500 to-purple-600 text-white rounded-xl font-medium text-center hover:shadow-lg transition-all"
-              >
+          <div className="lg:col-span-2 bg-white rounded-xl border border-gray-200 p-5">
+            <h2 className="font-semibold text-gray-900 text-sm mb-3">Quick Actions</h2>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+              <a href="/admin/orders" className="p-3 bg-gray-900 text-white rounded-lg text-xs font-medium text-center hover:bg-gray-800 transition-colors">
                 Manage Orders
               </a>
-              <a
-                href="/admin/products"
-                className="p-4 bg-gradient-to-r from-blue-500 to-cyan-600 text-white rounded-xl font-medium text-center hover:shadow-lg transition-all"
-              >
+              <a href="/admin/products" className="p-3 bg-indigo-600 text-white rounded-lg text-xs font-medium text-center hover:bg-indigo-700 transition-colors">
                 Products
               </a>
-              <a
-                href="/admin/users"
-                className="p-4 bg-gradient-to-r from-purple-500 to-pink-600 text-white rounded-xl font-medium text-center hover:shadow-lg transition-all"
-              >
+              <a href="/admin/users" className="p-3 bg-violet-600 text-white rounded-lg text-xs font-medium text-center hover:bg-violet-700 transition-colors">
                 Users
               </a>
-              <a
-                href="/admin/invoices"
-                className="p-4 bg-gradient-to-r from-orange-500 to-red-600 text-white rounded-xl font-medium text-center hover:shadow-lg transition-all"
-              >
+              <a href="/admin/invoices" className="p-3 bg-emerald-600 text-white rounded-lg text-xs font-medium text-center hover:bg-emerald-700 transition-colors">
                 Invoices
               </a>
             </div>
@@ -178,11 +156,11 @@ export default async function AdminDashboard() {
         </div>
         
         {/* Recent Orders */}
-        <div className="mt-8 bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-xl font-bold text-gray-900">Recent Orders</h2>
-            <a href="/admin/orders" className="text-purple-600 hover:text-purple-700 font-medium text-sm">
-              View All →
+        <div className="mt-6 bg-white rounded-xl border border-gray-200 p-5">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="font-semibold text-gray-900 text-sm">Recent Orders</h2>
+            <a href="/admin/orders" className="text-xs text-indigo-600 hover:text-indigo-700 font-medium">
+              View All &rarr;
             </a>
           </div>
           
@@ -190,32 +168,32 @@ export default async function AdminDashboard() {
             <table className="w-full">
               <thead>
                 <tr className="border-b border-gray-100">
-                  <th className="text-left py-3 px-4 text-sm font-medium text-gray-500">Order ID</th>
-                  <th className="text-left py-3 px-4 text-sm font-medium text-gray-500">Customer</th>
-                  <th className="text-left py-3 px-4 text-sm font-medium text-gray-500">Total</th>
-                  <th className="text-left py-3 px-4 text-sm font-medium text-gray-500">Status</th>
-                  <th className="text-left py-3 px-4 text-sm font-medium text-gray-500">Date</th>
+                  <th className="text-left py-2 px-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Order</th>
+                  <th className="text-left py-2 px-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Customer</th>
+                  <th className="text-left py-2 px-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Total</th>
+                  <th className="text-left py-2 px-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                  <th className="text-left py-2 px-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
                 </tr>
               </thead>
               <tbody>
                 {stats.recentOrders.map((order: any) => (
-                  <tr key={order._id} className="border-b border-gray-50 hover:bg-gray-50">
-                    <td className="py-3 px-4 text-sm font-mono text-gray-900">{order._id.slice(-8)}</td>
-                    <td className="py-3 px-4 text-sm text-gray-900">{order.user?.name || 'N/A'}</td>
-                    <td className="py-3 px-4 text-sm font-medium text-gray-900">{formatPrice(order.totalPrice)}</td>
-                    <td className="py-3 px-4">
-                      <span className={`px-3 py-1 rounded-full text-xs font-medium capitalize
-                        ${order.status === 'pending' ? 'bg-yellow-100 text-yellow-700' : ''}
-                        ${order.status === 'approved' ? 'bg-blue-100 text-blue-700' : ''}
-                        ${order.status === 'processing' ? 'bg-purple-100 text-purple-700' : ''}
-                        ${order.status === 'shipped' ? 'bg-indigo-100 text-indigo-700' : ''}
-                        ${order.status === 'delivered' ? 'bg-green-100 text-green-700' : ''}
-                        ${order.status === 'cancelled' ? 'bg-red-100 text-red-700' : ''}
+                  <tr key={order._id} className="border-b border-gray-50 hover:bg-gray-50/50">
+                    <td className="py-2.5 px-3 text-xs font-mono text-gray-900">{order._id.slice(-8).toUpperCase()}</td>
+                    <td className="py-2.5 px-3 text-xs text-gray-700">{order.user?.name || 'N/A'}</td>
+                    <td className="py-2.5 px-3 text-xs font-medium text-gray-900">{formatPrice(order.totalPrice)}</td>
+                    <td className="py-2.5 px-3">
+                      <span className={`px-2 py-0.5 rounded-full text-[10px] font-medium capitalize
+                        ${order.status === 'pending' ? 'bg-amber-50 text-amber-700 border border-amber-200' : ''}
+                        ${order.status === 'approved' ? 'bg-blue-50 text-blue-700 border border-blue-200' : ''}
+                        ${order.status === 'processing' ? 'bg-violet-50 text-violet-700 border border-violet-200' : ''}
+                        ${order.status === 'shipped' ? 'bg-indigo-50 text-indigo-700 border border-indigo-200' : ''}
+                        ${order.status === 'delivered' ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : ''}
+                        ${order.status === 'cancelled' ? 'bg-red-50 text-red-700 border border-red-200' : ''}
                       `}>
                         {order.status}
                       </span>
                     </td>
-                    <td className="py-3 px-4 text-sm text-gray-500">
+                    <td className="py-2.5 px-3 text-xs text-gray-500">
                       {new Date(order.createdAt).toLocaleDateString()}
                     </td>
                   </tr>
