@@ -18,7 +18,7 @@
     "framer-motion": "^12.34.2",
     "lucide-react": "^0.574.0",
     "mongoose": "^9.2.1",
-    "next": "16.1.6",
+    "next": "16.1.7",
     "next-auth": "^5.0.0-beta.30",
     "react": "19.2.3",
     "react-dom": "19.2.3",
